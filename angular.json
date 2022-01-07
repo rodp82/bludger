@@ -72,7 +72,7 @@
       "projectType": "application",
       "root": "apps/ui",
       "sourceRoot": "apps/ui/src",
-      "prefix": "home-budget-mono",
+      "prefix": "home-budget",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
