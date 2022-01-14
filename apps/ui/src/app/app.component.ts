@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@home-budget/api-interfaces';
+import { HelloService } from './hello.service';
 
 @Component({
   selector: 'home-budget-root',
@@ -8,6 +7,6 @@ import { Message } from '@home-budget/api-interfaces';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) { }
+  hello$ = this.hello.getHello();
+  constructor(private hello: HelloService) { }
 }
