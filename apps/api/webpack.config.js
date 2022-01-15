@@ -9,12 +9,14 @@ module.exports = (options) => {
     '@nestjs/websockets/socket-module',
     'class-validator',
     'class-transformer',
+    'class-transformer/storage',
     'cache-manager'
   ];
 
   const config = {
     ...options,
     entry: (env === 'production') ? 'apps/api/src/lambda.ts' : 'apps/api/src/main.ts',
+    target: 'node14',
     externals: [],
     optimization: {
       minimize: false
