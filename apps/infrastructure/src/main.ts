@@ -1,5 +1,7 @@
 import * as cdk from '@aws-cdk/core';
-import { AppStack } from './stacks/app-stack';
+import { UiStack } from './stacks/ui-stack';
+import { ApiStack } from './stacks/api-stack';
 
 const app = new cdk.App();
-new AppStack(app, 'HomeBudgetStack');
+new UiStack(app, 'HomeBudgetUiStack');
+new ApiStack(app, 'HomeBudgetApiStack');

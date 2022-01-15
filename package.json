@@ -13,7 +13,8 @@
     "build:api": "nx build api",
     "build:api:prod": "set NODE_ENV=production && nx build api --configuration=production",
     "test": "nx test",
-    "deploy": "nx deploy infrastructure --require-approval never"
+    "deploy:ui": "nx deploy infrastructure --stacks HomeBudgetUiStack --require-approval never",
+    "deploy:api": "nx deploy infrastructure --stacks HomeBudgetApiStack --require-approval never"
   },
   "private": true,
   "dependencies": {
