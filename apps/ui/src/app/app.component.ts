@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HelloService } from './hello.service';
 
 @Component({
-  selector: 'home-budget-root',
+  selector: 'bludger-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

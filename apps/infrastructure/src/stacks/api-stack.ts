@@ -10,10 +10,10 @@ export class ApiStack extends Stack {
     super(scope, id, props);
 
     // DB
-    
+
 
     // API
-    const lambda = new Function(this, 'HomeBudgetApiLambda', {
+    const lambda = new Function(this, 'BludgerApiLambda', {
       code: Code.fromAsset(join(__dirname, '../../../../dist/apps/api')),
       handler: 'main.handler',
       runtime: Runtime.NODEJS_14_X,
@@ -24,7 +24,7 @@ export class ApiStack extends Stack {
       }
     });
 
-    const httpApi = new HttpApi(this, 'HomeBudgetApiGateway', {
+    const httpApi = new HttpApi(this, 'BludgerApiGateway', {
       description: 'HTTP API Gateway',
       defaultAuthorizationScopes: [],
     });
@@ -37,7 +37,7 @@ export class ApiStack extends Stack {
         HttpMethod.PUT,
         HttpMethod.DELETE,
       ],
-      integration: new HttpLambdaIntegration('HomeBudgetApiLambdaIntegration', lambda),
+      integration: new HttpLambdaIntegration('BludgerApiLambdaIntegration', lambda),
     });
 
     new CfnOutput(this, 'ApiUrl', {

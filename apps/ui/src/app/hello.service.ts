@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@home-budget/api-interfaces';
+import { Message } from '@bludger/api-interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 

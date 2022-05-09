@@ -3,5 +3,5 @@ import { UiStack } from './stacks/ui-stack';
 import { ApiStack } from './stacks/api-stack';
 
 const app = new cdk.App();
-new UiStack(app, 'HomeBudgetUiStack');
-new ApiStack(app, 'HomeBudgetApiStack');
+new UiStack(app, 'BludgerUiStack');
+new ApiStack(app, 'BludgerApiStack');

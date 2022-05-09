@@ -10,12 +10,12 @@ export class UiStack extends Stack {
     super(scope, id, props);
 
     // Frontend
-    const websiteBucket = new Bucket(this, 'HomeBudgetUi', {
+    const websiteBucket = new Bucket(this, 'BludgerUi', {
       websiteIndexDocument: 'index.html',
       publicReadAccess: true,
     });
 
-    new BucketDeployment(this, 'HomeBudgetUiDeployment', {
+    new BucketDeployment(this, 'BludgerUiDeployment', {
       sources: [
         Source.asset(join(__dirname, '../../../../dist/apps/ui')),
       ],

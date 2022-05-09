@@ -22,7 +22,7 @@
       "projectType": "application",
       "root": "apps/ui",
       "sourceRoot": "apps/ui/src",
-      "prefix": "home-budget",
+      "prefix": "bludger",
       "targets": {
         "build": {
           "executor": "@angular-devkit/build-angular:browser",

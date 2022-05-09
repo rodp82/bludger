@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "homeBudget",
+            "prefix": "Bludger",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "home-budget",
+            "prefix": "bludger",
             "style": "kebab-case"
           }
         ]
