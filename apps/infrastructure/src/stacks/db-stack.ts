@@ -9,19 +9,13 @@ export class ApiStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // DB
-    
-
-    // API
+    // Backend
     const lambda = new Function(this, 'HomeBudgetApiLambda', {
       code: Code.fromAsset(join(__dirname, '../../../../dist/apps/api')),
       handler: 'main.handler',
       runtime: Runtime.NODEJS_14_X,
       memorySize: 1024,
       timeout: Duration.seconds(5),
-      environment: {
-
-      }
     });
 
     const httpApi = new HttpApi(this, 'HomeBudgetApiGateway', {

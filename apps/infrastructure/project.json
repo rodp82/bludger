@@ -1,5 +1,4 @@
 {
-  "root": "apps/infrastructure",
   "projectType": "application",
   "sourceRoot": "apps/infrastructure/src",
   "targets": {
@@ -22,7 +21,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/infrastructure"],
       "options": {
-        "jestConfig": "apps/infrastructure/jest.config.js",
+        "jestConfig": "apps/infrastructure/jest.config.ts",
         "passWithNoTests": true
       }
     }
