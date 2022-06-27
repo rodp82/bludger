@@ -1,21 +1,23 @@
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import serverlessExpress from '@vendia/serverless-express';
+import express from 'express';
 import { Context, Handler } from 'aws-lambda';
 
 import { AppModule } from './app/app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import { NestFactory } from '@nestjs/core';
-import express from 'express';
-import serverlessExpress from '@vendia/serverless-express';
 
 let cachedServer: Handler;
 
 async function bootstrap() {
   if (!cachedServer) {
     const expressApp = express();
-    const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+    app.useGlobalPipes(new ValidationPipe());
 
-    nestApp.enableCors();
+    app.enableCors();
 
-    await nestApp.init();
+    await app.init();
 
     cachedServer = serverlessExpress({ app: expressApp });
   }

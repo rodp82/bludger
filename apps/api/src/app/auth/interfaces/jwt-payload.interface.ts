@@ -1,6 +1,6 @@
 export interface JwtPayload {
-  thirdPartyId?: string,
-  provider?: string,
+  sub?: number,
+  name?: string,
   iat?: number,
   exp?: number
 }

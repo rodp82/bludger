@@ -42,3 +42,4 @@ apps/infrastructure/template.yaml
 .angular
 
 .env
+prisma/data.db

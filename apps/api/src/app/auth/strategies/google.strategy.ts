@@ -1,8 +1,9 @@
+import { Provider, User } from '@bludger/api-interfaces';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-google-oauth20';
-import { AuthService, Provider } from '../auth.service';
+import { Profile, Strategy } from 'passport-google-oauth20';
+import { AuthService } from '../auth.service';
 
 
 @Injectable()
@@ -22,16 +23,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
   }
 
-  async validate(request: any, accessToken: string, refreshToken: string, profile, done) {
+  async validate(request: any, accessToken: string, refreshToken: string, profile: Profile, done) {
     this.logger.debug('[validate]');
-    console.log('profile', profile)
 
     try {
-      const jwt = await this.authService.validateOAuthLogin(profile.id, Provider.GOOGLE);;
-      const user = {
+      const userData: User = {
         name: profile.displayName,
-        jwt
+        email: profile.emails[0].value
       }
+      const user = await this.authService.validateOAuthLogin(profile.id, Provider.GOOGLE, userData);
       done(null, user);
     }
     catch (err) {

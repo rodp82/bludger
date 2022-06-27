@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UsersService } from '../../users/users.service';
 // import { IUser } from '../../users/interfaces/user.interface';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
@@ -10,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   private readonly logger = new Logger(JwtStrategy.name);
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(private readonly configService: ConfigService, private usersService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -33,7 +34,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       //    return done(new UnauthorizedException('invalid token claims'), false);
 
       // return a user object with id instead of sub property
-      const user = (({ thirdPartyId, provider}) => ({ id: thirdPartyId, provider, name: 'Rod', email: 'rod@email.com' }))(payload); //TODO
+      const user = await this.usersService.findOne({id: payload.sub});
+
+      if (!user) {
+        throw new UnauthorizedException('Invalid token');
+      }
 
       done(null, user);
     }

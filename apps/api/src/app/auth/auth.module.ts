@@ -4,17 +4,12 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-// import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { UsersModule } from '../users/users.module';
+// import { UsersService } from '../users/users.service';
 
-// Do not remove dotenv init code below. Needed to get env config
-// as ConfigService isn't available at this point
-// import * as dotenv from 'dotenv';
-// dotenv.config();
 
-// console.log(process.env.JWT_EXPIRES);
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -28,6 +23,6 @@ import { UsersModule } from '../users/users.module';
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, GoogleStrategy],
-  exports: [PassportModule, AuthService],
+  exports: [AuthService],
 })
 export class AuthModule { }
