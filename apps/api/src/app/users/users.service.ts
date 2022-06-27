@@ -18,10 +18,8 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: Prisma.UserWhereUniqueInput): Promise<User | null> {
-    return this.prisma.user.findUnique({
-      where: id,
-    });
+  findOne(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    return this.prisma.user.findUnique({ where });
   }
 
   findOneByThirdPartyId(thirdPartyId: string, provider: Provider): Promise<User | null> {
@@ -72,22 +70,15 @@ export class UsersService {
   }
 
   create(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
-    });
+    return this.prisma.user.create({ data });
   }
 
   update(where: Prisma.UserWhereUniqueInput, data: Prisma.UserUpdateInput): Promise<User> {
-    return this.prisma.user.update({
-      data,
-      where,
-    });
+    return this.prisma.user.update({ data, where });
   }
 
   remove(where: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.delete({
-      where,
-    });
+    return this.prisma.user.delete({ where });
   }
 
 }
