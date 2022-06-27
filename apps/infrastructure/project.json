@@ -12,14 +12,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/infrastructure/**/*.ts"]
+        "lintFilePatterns": [
+          "apps/infrastructure/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/infrastructure"],
+      "outputs": [
+        "coverage/apps/infrastructure"
+      ],
       "options": {
         "jestConfig": "apps/infrastructure/jest.config.ts",
         "passWithNoTests": true

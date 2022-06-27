@@ -4,9 +4,10 @@
 /dist
 /tmp
 /out-tsc
+cdk.out/
 
 # dependencies
-/node_modules
+node_modules
 
 # IDEs and editors
 /.idea
@@ -37,5 +38,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
+apps/infrastructure/template.yaml
 .angular
+
+.env

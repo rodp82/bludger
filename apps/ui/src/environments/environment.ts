@@ -1,10 +1,14 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+const GOOGLE_AUTH_CLIENT_ID = '254660210484-c51g21qalnmjv7i0qpp7lg7s88bcd9tb.apps.googleusercontent.com';
 
 export const environment = {
   production: false,
-  apiBaseUrl: '/api'
+  apiBaseUrl: '/api',
+  googleAuth: {
+    clientId: GOOGLE_AUTH_CLIENT_ID
+  }
 };
 
 /*

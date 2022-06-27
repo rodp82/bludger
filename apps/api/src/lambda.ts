@@ -11,10 +11,7 @@ let cachedServer: Handler;
 async function bootstrap() {
   if (!cachedServer) {
     const expressApp = express();
-    const nestApp = await NestFactory.create(
-      AppModule,
-      new ExpressAdapter(expressApp),
-    );
+    const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
     nestApp.enableCors();
 
@@ -27,7 +24,6 @@ async function bootstrap() {
 }
 
 export const handler = async (event: any, context: Context, callback: any) => {
-  console.log('hello from lambda')
   const server = await bootstrap();
   return server(event, context, callback);
 };

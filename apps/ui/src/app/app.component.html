@@ -1,9 +1,15 @@
-<div style="text-align: center">
-  <h1>Welcome to ui!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Fast and Extensible Build System"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<bludger-header></bludger-header>
+
+<mat-sidenav-container class="container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-selection-list #accounts>
+      <mat-list-option checkboxPosition="before">Main Account</mat-list-option>
+      <mat-list-option checkboxPosition="before">Offset Account</mat-list-option>
+      <mat-list-option checkboxPosition="before">Credit Card Account</mat-list-option>
+      <mat-list-option checkboxPosition="before">Home Loan Account</mat-list-option>
+    </mat-selection-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
