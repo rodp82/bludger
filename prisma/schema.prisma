@@ -11,20 +11,51 @@ datasource db {
 }
 
 model User {
-  id        Int       @default(autoincrement()) @id
-  name      String
-  email     String    @unique
-  googleId  String?   @unique
-  accounts  Account[]   
+  id            Int         @default(autoincrement()) @id
+  name          String
+  email         String      @unique
+  googleId      String?     @unique
+  accounts      Account[]   
+  categories    Category[]
+  transactions  Transaction[]
 }
 
 model Account {
-  id        Int       @default(autoincrement()) @id
-  name      String 
-  type      String
-  balance   Decimal   @default(0.00)
-  userId    Int 
-  user      User      @relation(fields: [userId], references: [id])
-
+  id            Int         @default(autoincrement()) @id
+  name          String 
+  type          Int
+  balance       Decimal     @default(0.00)
+  userId        Int 
+  user          User        @relation(fields: [userId], references: [id])
+  transactions  Transaction[]
   @@unique([userId, name])
+}
+
+model Category {
+  id            Int         @default(autoincrement()) @id
+  name          String
+  type          Int
+  path          String
+  order         Int
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id])
+  parentId      Int?
+  parent        Category?   @relation("CategoryParent", fields: [parentId], references: [id])
+  children      Category[]  @relation("CategoryParent")
+  transactions  Transaction[]
+  @@unique([userId, parentId, name])
+  @@unique([userId, path])
+}
+
+model Transaction {
+  id            Int         @default(autoincrement()) @id
+  date          DateTime
+  amount        Decimal
+  description   String
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id])
+  accountId     Int
+  account       Account     @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  categoryId    Int?
+  category      Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }
