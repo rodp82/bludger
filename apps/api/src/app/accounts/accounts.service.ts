@@ -1,14 +1,7 @@
-import {
-  Inject,
-  Injectable,
-  Logger,
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Inject, Injectable, Logger, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Account, Prisma } from '@prisma/client';
-import e, { Request } from 'express';
+import { Request } from 'express';
 import { PrismaService } from '../prisma.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -17,10 +10,7 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 export class AccountsService {
   private readonly logger = new Logger(AccountsService.name);
 
-  constructor(
-    private prisma: PrismaService,
-    @Inject(REQUEST) private readonly request: Request
-  ) {}
+  constructor(private prisma: PrismaService, @Inject(REQUEST) private readonly request: Request) {}
 
   findAll(): Promise<Account[]> {
     return this.prisma.account.findMany({
@@ -48,10 +38,7 @@ export class AccountsService {
           throw new BadRequestException('This account name already exists');
         }
       }
-      throw new HttpException(
-        `Error saving new account: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
+      throw new HttpException(`Error saving new account: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -69,10 +56,7 @@ export class AccountsService {
     } catch (error) {
       this.logger.error(error);
       // if (error instanceof Prisma.PrismaClientKnownRequestError) {  }
-      throw new HttpException(
-        `Error saving new account: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
+      throw new HttpException(`Error saving new account: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

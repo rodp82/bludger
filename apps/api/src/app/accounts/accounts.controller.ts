@@ -3,12 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
   Logger,
-  Req,
   UseGuards,
   BadRequestException,
   NotFoundException,
@@ -44,10 +42,7 @@ export class AccountsController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateAccountDto: UpdateAccountDto
-  ) {
+  async update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
     this.logger.debug('[update]');
     if (+id !== updateAccountDto.id) {
       throw new BadRequestException(`The ID in URL doesn't match ID in body`);

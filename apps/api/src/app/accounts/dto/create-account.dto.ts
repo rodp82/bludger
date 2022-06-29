@@ -1,5 +1,4 @@
 import { Account, AccountType } from '@bludger/api-interfaces';
-import { Decimal } from '@prisma/client/runtime';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateAccountDto implements Account {

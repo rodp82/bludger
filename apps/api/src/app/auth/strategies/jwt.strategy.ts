@@ -8,7 +8,6 @@ import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-
   private readonly logger = new Logger(JwtStrategy.name);
 
   constructor(private readonly configService: ConfigService, private usersService: UsersService) {
@@ -21,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   /**
    * Validates a user based on a supplied Bearer Token payload
-   * @param payload 
+   * @param payload
    */
   async validate(payload: JwtPayload, done: any): Promise<void> {
     this.logger.debug('[validate]');
@@ -34,17 +33,17 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       //    return done(new UnauthorizedException('invalid token claims'), false);
 
       // return a user object with id instead of sub property
-      const user = await this.usersService.findOne({id: payload.sub});
+      const user = await this.usersService.findOne({ id: payload.sub });
 
       if (!user) {
         throw new UnauthorizedException('Invalid token');
       }
 
+      this.logger.debug(`Valid JWT token and user ${user.name}`);
+
       done(null, user);
-    }
-    catch (err) {
+    } catch (err) {
       throw new UnauthorizedException('unauthorized', err.message);
     }
   }
-
 }
