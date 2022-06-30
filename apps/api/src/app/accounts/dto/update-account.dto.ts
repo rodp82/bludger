@@ -1,6 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAccountDto } from './create-account.dto';
+import { Account, AccountType } from '@bludger/api-interfaces';
 
-export class UpdateAccountDto extends PartialType(CreateAccountDto) {
+export class UpdateAccountDto implements Account {
   id: number;
+  name: string;
+  type: AccountType;
+  balance: number;
 }

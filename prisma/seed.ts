@@ -65,30 +65,49 @@ async function main() {
   const accMain = await prisma.account.upsert({
     where: { userId_name: {name: 'Main Account', userId: rod.id } },
     update: {},
-    create: { name: 'Main Account', type: AccountType.Cash, balance: 100.0, userId: rod.id,
-      // transactions: { 
-      //   create: [
-      //     { date: '2022-01-01', amount: -10, description: faker.lorem.words(5), categoryId: catGroceriesSupermarkets }
-      //   ]
-      // }
-    }
-  })
+    create: { name: 'Main Account', type: AccountType.Cash, balance: 100.0, userId: rod.id }
+  });
 
   const accCredit = await prisma.account.upsert({
     where: { userId_name: {name: 'Credit Card', userId: rod.id } },
     update: {},
     create: { name: 'Credit Card', type: AccountType.Credit, balance: -100.0, userId: rod.id }
-  })
+  });
 
   const accLoan = await prisma.account.upsert({
     where: { userId_name: {name: 'Home Loan', userId: rod.id } },
     update: {},
     create: { name: 'Home Loan', type: AccountType.Loan, balance: -1000.0, userId: rod.id }
-  })
+  });
 
-  const transactions: Prisma.TransactionCreateInput[] = [
-    { date: new Date('2022-01-01'), amount: new Prisma.Decimal(10.00), description: faker.lorem.words(5), account: { connect : accMain }, category: { connect: catIncomeSalary}, user: { connect: { id: rod.id }} } 
-  ]
+  const accountIds = [accMain, accCredit, accLoan].map(a => a.id)
+  const categoryIds = [catIncomeSalary, catBankingLoan, catBankingInvestment, catGroceriesSupermarkets, catTransferringSavings].map(c =>c.id)
+
+  const transactions: Prisma.TransactionCreateInput[] = Array.from({length: 100}, (v,i) => {
+    return { 
+      date: faker.date.recent(),// new Date('2022-01-01'), 
+      amount: new Prisma.Decimal(faker.finance.amount(1,500,2)), 
+      description: faker.lorem.words(5), 
+      account: { connect : { id: faker.helpers.arrayElement(accountIds) } }, 
+      category: { connect: { id: faker.helpers.arrayElement(categoryIds) } }, 
+      user: { connect: { id: rod.id }} }
+  });
+  
+  // [
+    // { date: new Date('2022-01-02'), amount: new Prisma.Decimal(-50.00), description: faker.lorem.words(5), account: { connect : { id: accMain.id } }, category: { connect: { id: catBankingLoan.id} }, user: { connect: { id: rod.id }} },
+    // { date: new Date('2022-01-03'), amount: new Prisma.Decimal(-30.00), description: faker.lorem.words(5), account: { connect : { id: accMain.id } }, category: { connect: { id: catGroceriesSupermarkets.id} }, user: { connect: { id: rod.id }} },
+    // { date: new Date('2022-01-04'), amount: new Prisma.Decimal(-10.00), description: faker.lorem.words(5), account: { connect : { id: accMain.id } }, category: { connect: { id: catTransferringSavings.id} }, user: { connect: { id: rod.id }} },
+    // { date: new Date('2022-01-05'), amount: new Prisma.Decimal(-5.00), description: faker.lorem.words(5), account: { connect : { id: accMain.id } }, category: { connect: { id: catBankingInvestment.id} }, user: { connect: { id: rod.id }} },
+  // ];
+
+  Promise.all(transactions.map(t => prisma.transaction.aggregate))
+
+  for (const transaction of transactions) {
+    await prisma.transaction.create({
+      data: transaction
+    })
+  }
+
 }
 
 main()

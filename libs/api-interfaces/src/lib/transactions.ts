@@ -14,6 +14,6 @@ export interface Transaction {
   accountId: number;
   account?: Account;
 
-  catgegoryId?: number;
-  catgegory?: Category;
+  categoryId?: number;
+  category?: Category;
 }

@@ -1,4 +1,21 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateTransactionDto } from './create-transaction.dto';
+import { Transaction } from '@bludger/api-interfaces';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {}
+export class UpdateTransactionDto implements Transaction {
+  @IsNotEmpty()
+  id: number;
+
+  @IsNotEmpty()
+  date: Date;
+
+  @IsNotEmpty()
+  amount: number;
+
+  @IsNotEmpty()
+  description: string;
+
+  @IsNotEmpty()
+  accountId: number;
+
+  categoryId?: number;
+}
